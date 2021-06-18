@@ -11,13 +11,19 @@ socket.on('prices', prices => {
 	formatPrice(prices) 
 })
 
+socket.on('err', msg => {
+	alert(msg)
+	clearInterval(interval)
+
+})
+
 //funcao para mostrar os preços 
 function formatPrice(prices){ 
-	btcprice.innerHTML = `US$${prices[1].USD.buy} <br> R$${prices[1].BRL.buy}`
-	dolarprice.innerHTML = `R$${prices[0].USD.bid}`
+	btcprice.innerHTML = `US$ ${prices[1].USD.buy} <br> R$ ${prices[1].BRL.buy}`
+	dolarprice.innerHTML = `R$ ${prices[0].USD.bid}`
 }
 
 //manda request para update 
-setInterval(() => {
+var interval = setInterval(() => {
 	socket.emit('updatePrice')	
 }, 30000);
